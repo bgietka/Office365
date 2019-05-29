@@ -1,0 +1,7 @@
+Get-MsolAccountSku |ft AccountSkuId,SkuPartNumber
+$ServicePlan = Get-MsolAccountSku | Where {$_.SkuPartNumber -eq "EnterprisePremium"}         #przypisanie do zmiennej informacji o licencjach
+$ServicePlan.ServiceStatus                                        #Wyświetlenie informacji o dostępnych aplikacjach w planie i ich statusie
+$LO = New-MsolLicenseOptions -AccountSkuId "bartektest:ENTERPRISEPREMIUM" -DisabledPlans "WHITEBOARD_PLAN3", "MIP_S_CLP2", "MIP_S_CLP1", "MYANALYTICS_P2", "PAM_ENTERPRISE", "BPOS_S_TODO_3", "FORMS_PLAN_E5", "STREAM_O365_E5", "THREAT_INTELLIGENCE", "Deskless", "FLOW_O365_P3", "POWERAPPS_O365_P3", "ADALLOM_S_O365", "EQUIVIO_ANALYTICS", "LOCKBOX_ENTERPRISE", "EXCHANGE_ANALYTICS", "SWAY", "ATP_ENTERPRISE", "MCOEV", "MCOMEETADV", "BI_AZURE_P2", "INTUNE_O365", "PROJECTWORKMANAGEMENT", "RMS_S_ENTERPRISE", "YAMMER_ENTERPRISE", "OFFICESUBSCRIPTION"      #Podajemy aplikacje do wyłączenia.
+Set-MsolUserLicense -UserPrincipalName test1@xxxxx.pl -LicenseOptions $LO
+#przypisanie wszystkim użytkownikom bez licencji
+#Get-MsolUser -All -UnlicensedUsersOnly | foreach {Set-MsolUserLicense -LicenseOptions $LO}
